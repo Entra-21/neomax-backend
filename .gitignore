@@ -1,0 +1,18 @@
+# Visual Studio
+.vscode
+
+#Django
+db.sqlite3
+
+#Python cache and virtual environment
+venv
+pyvenv.cfg
+__pycache__/
+*.py[cod]
+*$py.class
+lib/
+scripts/
+include/
+
+#Others
+.env
