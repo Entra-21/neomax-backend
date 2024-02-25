@@ -1,5 +1,16 @@
 from django.contrib import admin
-from .models import Exercise, Routine, Workout, Meal, Day, Diet, CustomUser
+from .models import (
+    CustomUser,
+    Day,
+    Diet,
+    Exercise,
+    ExerciseSession,
+    Meal,
+    Routine,
+    Workout,
+)
 
 
-admin.site.register([Exercise, Routine, Workout, Meal, Day, Diet, CustomUser])
+admin.site.register(
+    [CustomUser, Day, Diet, Exercise, ExerciseSession, Meal, Routine, Workout]
+)

@@ -29,7 +29,7 @@ class Exercise(models.Model):
     )
     gif = models.CharField(
         help_text="Insira a URL do gif de demonstração do exercício.",
-        max_length=100,
+        max_length=1000,
         null=True,
         blank=True,
     )
@@ -87,13 +87,14 @@ class Workout(models.Model):
         null=True,
         blank=True,
     )
-    user = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        help_text="Informe o usuário de criação do treino.",
-        related_name="workouts",
-        default=1,
-    )
+    active = models.BooleanField(help_text="Informe se este é o treino ativo.")
+    # user = models.ForeignKey(
+    #     CustomUser,
+    #     on_delete=models.CASCADE,
+    #     help_text="Informe o usuário de criação do treino.",
+    #     related_name="workouts",
+    #     default=1,
+    # )
 
     class Meta:
         ordering = ["name"]
@@ -109,7 +110,6 @@ class Routine(models.Model):
         null=True,
         blank=True,
     )
-    exercises = models.ManyToManyField(Exercise)
     workout = models.ForeignKey(
         Workout, on_delete=models.CASCADE, related_name="routines"
     )
@@ -121,6 +121,36 @@ class Routine(models.Model):
         return f"{self.title}"
 
 
+class ExerciseSession(models.Model):
+    routine = models.ForeignKey(
+        Routine,
+        on_delete=models.CASCADE,
+        related_name="sessions",
+        help_text="Insira a rotina a qual a sessão pertence.",
+    )
+    exercise = models.ForeignKey(
+        Exercise,
+        on_delete=models.CASCADE,
+        help_text="Selecione o exercício da sessão.",
+    )
+    reps = models.IntegerField(
+        help_text="Insira a quantidade de repetições.", null=True, blank=True
+    )
+    sets = models.IntegerField(
+        help_text="Insira a quantidade de séries.", null=True, blank=True
+    )
+    weight = models.IntegerField(
+        help_text="Insira o peso usado no exercício.", null=True, blank=True
+    )
+    
+    class Meta:
+        ordering = ["routine"]
+
+    def __str__(self):
+        return f"{self.routine.title, self.exercise.name}"
+
+
+
 class Diet(models.Model):
     name = models.CharField(
         help_text="Insira o nome da dieta.",
@@ -129,13 +159,13 @@ class Diet(models.Model):
         blank=True,
     )
     active = models.BooleanField(help_text="Informe se esta é a dieta ativa.")
-    user = models.ForeignKey(
-        CustomUser,
-        on_delete=models.CASCADE,
-        help_text="Informe o usuário de criação da dieta.",
-        related_name="diets",
-        default=1,
-    )
+    # user = models.ForeignKey(
+    #     CustomUser,
+    #     on_delete=models.CASCADE,
+    #     help_text="Informe o usuário de criação da dieta.",
+    #     related_name="diets",
+    #     default=1,
+    # )
 
     class Meta:
         ordering = ["name"]

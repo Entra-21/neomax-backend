@@ -28,3 +28,38 @@ class UserSerializer(serializers.ModelSerializer):
             "diets",
             "workouts",
         ]
+
+
+class ExerciseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Exercise
+        fields = "__all__"
+
+
+class ExerciseSessionSerializer(serializers.ModelSerializer):
+    exercise = ExerciseSerializer(read_only=True)
+    class Meta:
+        model = models.ExerciseSession
+        fields = "__all__"
+
+
+class RoutineSerializer(serializers.ModelSerializer):
+    sessions = ExerciseSessionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Routine
+        fields = "__all__"
+
+
+class WorkoutSerializer(serializers.ModelSerializer):
+    routines = RoutineSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = models.Workout
+        fields = "__all__"
+
+
+class DietSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Diet
+        fields = "__all__"
