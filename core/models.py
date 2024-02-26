@@ -77,7 +77,7 @@ class Exercise(models.Model):
         ordering = ["name"]
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name, self.id}"
 
 
 class Workout(models.Model):
@@ -184,7 +184,7 @@ class Day(models.Model):
     diet = models.ForeignKey(Diet, on_delete=models.CASCADE, related_name="days")
 
     class Meta:
-        ordering = ["name"]
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.name}"

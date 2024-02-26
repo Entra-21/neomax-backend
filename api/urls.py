@@ -10,6 +10,7 @@ router.register(r"exercises", views.ExerciseViewSet)
 router.register(r"routines", views.RoutineViewSet)
 router.register(r"users", views.UserViewSet, basename="user")
 router.register(r"workouts", views.WorkoutViewSet)
+router.register(r"days", views.DayViewSet)
 
 urlpatterns = [
     path("api/", include(router.urls)),
